@@ -32,12 +32,6 @@ func HandleUpload(sLog *log.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		sLog.Printf("received %v request \"%v\" from \"%v\" (User-Agent: %v)", r.Method, r.URL, r.Host, r.UserAgent())
 
-		if r.Method != http.MethodPost {
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-			sLog.Printf("client ERROR: %v method %v not allowed", http.StatusMethodNotAllowed, r.Method)
-			return
-		}
-
 		err := r.ParseMultipartForm(maxSize)
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
